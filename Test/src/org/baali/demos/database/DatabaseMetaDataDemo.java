@@ -33,7 +33,7 @@ public class DatabaseMetaDataDemo
 		{
 			System.out.println(rsmd.getColumnLabel(j));
 		}
-		
+		//Get Table names
 		System.out.println("Tables");
 		System.out.println("---------------");
 		while(rs.next())
