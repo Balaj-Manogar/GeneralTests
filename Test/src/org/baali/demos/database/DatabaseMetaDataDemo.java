@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 public class DatabaseMetaDataDemo
@@ -23,6 +24,15 @@ public class DatabaseMetaDataDemo
 		System.out.println("DB_Minor Version: " + dbmd.getDatabaseMinorVersion());
 		
 		ResultSet rs = dbmd.getTables(null, null, null, null);
+		
+		// Getting ResultSet MetaData
+		ResultSetMetaData rsmd = rs.getMetaData();
+		int columnCount = rsmd.getColumnCount();
+		System.out.println("Printing Result set meta Deta");
+		for(int j = 1; j < columnCount + 1; j++)
+		{
+			System.out.println(rsmd.getColumnLabel(j));
+		}
 		
 		System.out.println("Tables");
 		System.out.println("---------------");
