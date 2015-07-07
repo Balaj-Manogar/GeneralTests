@@ -32,6 +32,14 @@ public class DatabaseMetaDataDemo
 			i++;
 		}
 		
+		// Get Column names
+		rs = dbmd.getColumns(null, null, "employees", null);
+		
+		while(rs.next())
+		{
+			System.out.println("Name: \t" + rs.getString(4) + " Type: \t" + rs.getString("TYPE_NAME"));
+		
+		}
 		
 	}
 }
