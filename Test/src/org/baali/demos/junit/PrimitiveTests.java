@@ -38,4 +38,31 @@ public class PrimitiveTests
 		set.add("xyz");
 		assertTrue("Added duplicate it should fail", set.add("xyz"));		
 	}
+	
+	@Test
+	public void intEquality()
+	{
+		int i = 10;
+		int j = 10;
+		
+		assertTrue(i == j);
+	}
+	
+	@Test
+	public void integerValueOfEquality()
+	{
+		Integer int1 = Integer.valueOf(100);
+		Integer int2 = Integer.valueOf(100);
+		
+		assertTrue(int1 == int2);
+	}
+	
+	@Test
+	public void intgerInstanceEquality()
+	{
+		Integer int1 = new Integer(100);
+		Integer int2 = new Integer(100);
+		
+		assertTrue(int1 == int2);
+	}
 }
