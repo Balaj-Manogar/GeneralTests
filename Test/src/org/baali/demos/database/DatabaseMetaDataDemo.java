@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
+import com.mysql.jdbc.PreparedStatement;
+
 public class DatabaseMetaDataDemo
 {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException
@@ -25,9 +27,12 @@ public class DatabaseMetaDataDemo
 		
 		ResultSet rs = dbmd.getTables(null, null, null, null);
 		
+		
+		
 		// Getting ResultSet MetaData
 		ResultSetMetaData rsmd = rs.getMetaData();
 		int columnCount = rsmd.getColumnCount();
+		System.out.println("Column Count: " + columnCount);
 		System.out.println("Printing Result set meta Deta");
 		for(int j = 1; j < columnCount + 1; j++)
 		{
@@ -50,6 +55,22 @@ public class DatabaseMetaDataDemo
 			System.out.println("Name: \t" + rs.getString(4) + " Type: \t" + rs.getString("TYPE_NAME"));
 		
 		}
+		
+		System.out.println("--------------------------");
+
+		String sql = "select * from employees limit ?";
+		PreparedStatement ps = (PreparedStatement) connection.prepareStatement(sql);
+		ps.setInt(1, 10);
+		
+		rs = ps.executeQuery();
+		while(rs.next())
+		{
+			System.out.println(rs.getInt(1));
+		}
+		System.out.println("--------------------------");
+		
+		ResultSetMetaData rsm = rs.getMetaData();
+		System.out.println(rsm.getColumnName(1));
 		
 	}
 }
