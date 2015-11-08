@@ -38,6 +38,7 @@ public class ResultSetConcurrentUpdatable
 		
 		//update resultset
 		resultSet.updateDate(3, futureHireDate);
+		// this updates the resultset to the database
 		resultSet.updateRow();
 		
 		// move to first row
