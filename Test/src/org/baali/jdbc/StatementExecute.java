@@ -46,6 +46,15 @@ public class StatementExecute
 			}
 		}
 		
+		// update employee  UPDATE `employees`.`employees` SET `first_name`='Balaji' WHERE `emp_no`='500000';
+		query = "update  employees set first_name='Balaji' where emp_no=500000";
+		select = statement.execute(query);
+		if(!select)
+		{
+			System.out.println(statement.getUpdateCount() + " rows affected..");
+		}
+		
+		
 	}
 
 }
