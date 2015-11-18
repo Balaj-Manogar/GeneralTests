@@ -23,39 +23,29 @@ public class ResultSetInsertRow
 
 		String query = "select * from employees  order by emp_no desc limit 3";
 		ResultSet resultSet = statement.executeQuery(query);
-		int rowCount = 0;
-		resultSet.last();
-		rowCount = resultSet.getRow();
+		int rowCount = getRowCount(resultSet);
 		System.out.printf("Number of rows before insert:\t%s\n", rowCount);
-		System.out.printf("%85s %n", "---------------------------------------------------------------------------------");
+		String lineBreak = "----------------------------------------------------------------------------------------------------";
+		System.out.printf("%95s %n", lineBreak);
 
-		int columnCount = resultSet.getMetaData().getColumnCount();
-		for (int i = 1; i <= columnCount; i++) 
-		{
-			System.out.printf("%12s%2s|%2s", resultSet.getMetaData().getColumnName(i), "", "");
-		}
-		System.out.printf("\n%85s\n", "---------------------------------------------------------------------------------");
+		printColumnNames(resultSet);
+		
+		System.out.printf("\n%95s\n", lineBreak);
 		// move to its original position
 		resultSet.beforeFirst();
-		while (resultSet.next())
-		{
-			for(int i = 1; i <= columnCount; i++)
-			{
-				System.out.printf("%12s%2s|%2s", resultSet.getObject(i), "", "" );
-			}
-			System.out.println();		
-		}
+		printData(resultSet);
+		
 		String birthDate = "2016-10-26";
 		String joiningDate = "2030-10-30";
-		Date sqlBirthDate = new Date(new SimpleDateFormat("yyyy-mm-dd").parse(birthDate).getTime());
-		Date sqlHireDate = new Date(new SimpleDateFormat("yyyy-mm-dd").parse(joiningDate).getTime());
-		
+		Date sqlBirthDate = new Date(new SimpleDateFormat("yyyy-MM-dd").parse(birthDate).getTime());
+		Date sqlHireDate = new Date(new SimpleDateFormat("yyyy-MM-dd").parse(joiningDate).getTime());
+		// this is update part other codes are just used to print
 		resultSet.beforeFirst();
 		resultSet.moveToInsertRow();
 		
 		resultSet.updateInt(1, 500001);
 		resultSet.updateDate(2, sqlBirthDate);
-		resultSet.updateString(3, "Sindhu");
+		resultSet.updateString(3, "Siu");
 		resultSet.updateString(4, "Balaji");
 		resultSet.updateString(5, "F");
 		resultSet.updateDate(6, sqlHireDate);
@@ -64,24 +54,46 @@ public class ResultSetInsertRow
 		String divider = "=================================";
 		System.out.printf("%s\n\t After Update:\n%s\n", divider, divider);
 		
-		System.out.println();
+		
+		rowCount = getRowCount(resultSet);;
 		System.out.printf("Number of rows AFter insert:\t%s\n", rowCount);
-		System.out.printf("%85s %n", "---------------------------------------------------------------------------------");
+		System.out.printf("%95s %n", lineBreak);
 
-		for (int i = 1; i <= columnCount; i++)
-		{
-			System.out.printf("%12s%2s|%2s", resultSet.getMetaData().getColumnName(i), "", "");
-		}
-		System.out.printf("\n%85s\n", "---------------------------------------------------------------------------------");
+		printColumnNames(resultSet);
+		
+		System.out.printf("\n%95s\n", lineBreak);
 		// move to its original position
 		resultSet.beforeFirst();
+		printData(resultSet);
+		
+	}
+
+	private static int getRowCount(ResultSet resultSet) throws SQLException
+	{
+		int rowCount = 0;
+		resultSet.last();
+		rowCount = resultSet.getRow();
+		return rowCount;
+	}
+
+	private static void printData(ResultSet resultSet) throws SQLException
+	{
 		while (resultSet.next())
 		{
-			for(int i = 1; i <= columnCount; i++)
+			for(int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++)
 			{
 				System.out.printf("%12s%2s|%2s", resultSet.getObject(i), "", "" );
 			}
 			System.out.println();		
+		}
+	}
+
+	private static void printColumnNames(ResultSet resultSet) throws SQLException
+	{
+		int columnCount = resultSet.getMetaData().getColumnCount();
+		for (int i = 1; i <= columnCount; i++) 
+		{
+			System.out.printf("%12s%2s|%2s", resultSet.getMetaData().getColumnName(i), "", "");
 		}
 		
 	}
